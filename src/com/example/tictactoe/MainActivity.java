@@ -1,23 +1,18 @@
 package com.example.tictactoe;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Gravity;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.EditText;
 
 public class MainActivity extends Activity {
-	private boolean isX;
-    private int moveCounter;
     
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        isX = true;
-        moveCounter = 0;
     }
 
     @Override
@@ -26,32 +21,13 @@ public class MainActivity extends Activity {
         return true;
     }
     
-    public void handleClick(View view){
-    	Button button = (Button) view;
-    	if(!button.getText().toString().equals("")){
-    		//Place taken
-    		return;
-    	}
-    	moveCounter++;
-    	String text = "";
-    	if(isX){
-    		isX = false;
-    		text = "X";
-    	}else{
-    		isX = true;
-    		text = "O";
-    	}
-    	
-    	button.setText(text);
-    	
-    	//Now check Win
-    	
-    	//Should'nt get here if there's a winner
-    	if(moveCounter == 9){
-    		Toast toast = Toast.makeText(this, "No one wins...", Toast.LENGTH_LONG);
-    		toast.setGravity(Gravity.TOP|Gravity.CENTER_VERTICAL, 0, 0);
-    		toast.show(); 
-
-    	}
+    public void play(View v){
+    	String player1 = ((EditText)findViewById(R.id.player1)).getText().toString();
+    	String player2 = ((EditText)findViewById(R.id.player2)).getText().toString();
+    	Intent intent = new Intent(this, GameActivity.class);
+    	intent.putExtra("player1", player1);
+    	intent.putExtra("player2", player2);
+    	startActivity(intent);
     }
+    
 }
